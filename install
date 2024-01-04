@@ -1,0 +1,53 @@
+#!/bin/bash
+
+# Set the path to the JAR file and the target directory
+JAR_PATH=~/Library/Java/Extensions/wk.jar
+MAN_PATH=~/.local/share/man
+BIN_PATH=~/bin
+
+# Build the project
+./gradlew build
+
+# Move the JAR file to the target directory
+mkdir -p ~/Library/Java/Extensions
+chmod +x build/libs/wk-1.0.0.jar
+mv build/libs/wk-1.0.0.jar "$JAR_PATH"
+
+# Create the wk script
+echo '#!/bin/bash' > wk
+echo "java -jar $JAR_PATH \"\$@\"" >> wk
+chmod +x wk
+
+# Move the script to the bin directory
+mkdir -p "$BIN_PATH"
+mv wk "$BIN_PATH/wk"
+
+# Copy the man page to the local man directory
+mkdir -p "$MAN_PATH/man1"
+cp wk.1 "$MAN_PATH/man1/"
+
+# Update ~/.profile only if the export PATH line doesn't exist
+if ! grep -q "export PATH=\"\$PATH:$BIN_PATH\"" ~/.profile; then
+  echo '# Add /bin to the PATH' >> ~/.profile
+  echo "export PATH=\"\$PATH:$BIN_PATH\"" >> ~/.profile
+fi
+
+# Update ~/.profile to include the local man directory in MANPATH
+if ! grep -q "export MANPATH=\"\$MANPATH:$MAN_PATH\"" ~/.profile; then
+  echo '# Add local man directory to MANPATH' >> ~/.profile
+  echo "export MANPATH=\"\$MANPATH:$MAN_PATH\"" >> ~/.profile
+fi
+
+# Source the configuration file
+PROFILE_PATH=~/.profile
+if ! grep -q "export PATH=\"\$PATH:$BIN_PATH\"" "$PROFILE_PATH"; then
+  echo '# Add /bin to the PATH' >> "$PROFILE_PATH"
+  echo "export PATH=\"\$PATH:$BIN_PATH\"" >> "$PROFILE_PATH"
+fi
+
+# Source the configuration file with a directive
+# shellcheck source=/dev/null
+source "$PROFILE_PATH"
+
+echo "wk successfully installed."
+echo "$> man wk"
