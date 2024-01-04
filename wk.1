@@ -1,0 +1,40 @@
+.\" Man page for wk.
+.\" Adapted from the example at https://www.systutorials.com/docs/linux/man/7-man-pages/
+.TH WK 1 "January 2024" "1.0.0" "wk man page"
+.SH NAME
+wk \- Count bytes, lines, or words in a file (wc clone written in Kotlin)
+.SH SYNOPSIS
+.B wk
+.RI [ options ]
+.I filename
+.SH DESCRIPTION
+.B wk
+counts the number of bytes, lines, or words in a file and writes the result to the standard output.
+.SH OPTIONS
+.TP
+.B -c, --bytes
+The number of bytes in the input file is written to the standard output.
+.TP
+.B -l, --lines
+The number of lines in the input file is written to the standard output.
+.TP
+.B -w, --words
+The number of words in the input file is written to the standard output.
+.SH ARGUMENTS
+.TP
+.I filename
+The path to the input file.
+.SH EXAMPLES
+Count the number of lines in a file:
+.PP
+.B wk -l myfile.txt
+.SH SEE ALSO
+.BR wcq (1)
+.SH AUTHOR
+Vladas Maier <vladas.mr@gmail.com>.
+.SH BUGS
+Report bugs to vladas.mr@gmail.com.
+.SH COPYRIGHT
+Copyright © 2024 Vladas Maier. This is free software: you are free to change and redistribute it.
+There is NO WARRANTY, to the extent permitted by law.
+.\" End of man page
