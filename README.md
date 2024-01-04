@@ -1,3 +1,5 @@
+![](https://github.com/vlmaier/wk/actions/workflows/build.yml/badge.svg)
+
 # wk - the wc clone
 
 Coding Challenge #1 - Build your own wc!
