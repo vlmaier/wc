@@ -11,6 +11,8 @@ class WordCount : CliktCommand(name = "wc") {
         .help { "The number of bytes in the input file is written to the standard output." }
     private val countLines by option("-l").flag()
         .help { "The number of lines in the input file is written to the standard output." }
+    private val countWords by option("-w").flag()
+        .help { "The number of words in the input file is written to the standard output." }
     private val fileName by argument()
 
     override fun run() {
@@ -20,6 +22,10 @@ class WordCount : CliktCommand(name = "wc") {
         }
         if (countLines) {
             val count = Files.readAllLines(Path.of(fileName)).count()
+            echo("$count $fileName")
+        }
+        if (countWords) {
+            val count = Files.readString(Path.of(fileName)).trim().split("\\s+".toRegex()).count()
             echo("$count $fileName")
         }
     }

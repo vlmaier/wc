@@ -24,6 +24,8 @@ Options:
               output.
   -l          The number of lines in the input file is written to the standard
               output.
+  -w          The number of words in the input file is written to the standard
+              output.
   -h, --help  Show this message and exit
 """.trimStart(), result.stdout)
         assertEquals("", result.stderr)
@@ -54,6 +56,14 @@ Error: missing argument <filename>
     fun `test lines counter`() {
         val result = wc.test("-l $fileName")
         assertEquals("7145 $fileName\n", result.stdout)
+        assertEquals("", result.stderr)
+        assertEquals(0, result.statusCode)
+    }
+
+    @Test
+    fun `test words counter`() {
+        val result = wc.test("-w $fileName")
+        assertEquals("58164 $fileName\n", result.stdout)
         assertEquals("", result.stderr)
         assertEquals(0, result.statusCode)
     }
