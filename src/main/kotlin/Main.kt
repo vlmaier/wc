@@ -16,18 +16,14 @@ class WordCount : CliktCommand(name = "wc") {
     private val fileName by argument()
 
     override fun run() {
-        if (countBytes) {
-            val count = Files.readAllBytes(Path.of(fileName)).count()
-            echo("$count $fileName")
+        val filePath = Path.of(fileName)
+        val count = when {
+            countBytes -> Files.readAllBytes(filePath).size
+            countLines -> Files.readAllLines(filePath).size
+            countWords -> Files.readString(filePath).trim().split("\\s+".toRegex()).size
+            else -> 0
         }
-        if (countLines) {
-            val count = Files.readAllLines(Path.of(fileName)).count()
-            echo("$count $fileName")
-        }
-        if (countWords) {
-            val count = Files.readString(Path.of(fileName)).trim().split("\\s+".toRegex()).count()
-            echo("$count $fileName")
-        }
+        echo("$count $fileName")
     }
 }
 
