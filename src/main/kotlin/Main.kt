@@ -23,19 +23,32 @@ class WordCount : CliktCommand(name = "wk") {
     override fun run() {
         val filePath = Path.of(fileName)
         val counter = when {
-            countBytes -> Files.readAllBytes(filePath).size
-            countLines -> Files.readAllLines(filePath).size
-            countWords -> Files.readString(filePath).trim().split("\\s+".toRegex()).size
-            countCharacters -> {
-                if (Charset.defaultCharset().displayName().contains("UTF-8", ignoreCase = true)) {
-                    Files.readString(filePath).length
-                } else {
-                    Files.size(filePath)
-                }
-            }
-            else -> 0
+            countBytes -> countBytes(filePath)
+            countLines -> countLines(filePath)
+            countWords -> countWords(filePath)
+            countCharacters -> countCharacters(filePath)
+            else -> defaultCount(filePath)
         }
         echo("  $counter $fileName")
+    }
+
+    private fun defaultCount(filePath: Path): String {
+        val lines = countLines(filePath)
+        val words = countWords(filePath)
+        val characters = countCharacters(filePath)
+        return "$lines  $words  $characters"
+    }
+
+    private fun countBytes(filePath: Path): Int = Files.readAllBytes(filePath).size
+    private fun countLines(filePath: Path): Int = Files.readAllLines(filePath).size
+    private fun countWords(filePath: Path): Int = Files.readString(filePath).trim().split("\\s+".toRegex()).size
+
+    private fun countCharacters(filePath: Path): Int {
+        return if (Charset.defaultCharset().displayName().contains("UTF-8", ignoreCase = true)) {
+            Files.readString(filePath).length
+        } else {
+            countBytes(filePath)
+        }
     }
 }
 

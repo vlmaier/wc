@@ -79,4 +79,12 @@ Error: missing argument <filename>
         assertEquals("", result.stderr)
         assertEquals(0, result.statusCode)
     }
+
+    @Test
+    fun `test default counter`() {
+        val result = wk.test(testFile)
+        assertEquals("  7145  58164  339292 $testFile\n", result.stdout)
+        assertEquals("", result.stderr)
+        assertEquals(0, result.statusCode)
+    }
 }
