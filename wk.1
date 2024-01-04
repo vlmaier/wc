@@ -12,13 +12,16 @@ wk \- Count bytes, lines, or words in a file (wc clone written in Kotlin)
 counts the number of bytes, lines, or words in a file and writes the result to the standard output.
 .SH OPTIONS
 .TP
-.B -c, --bytes
+.B -c
 The number of bytes in the input file is written to the standard output.
 .TP
-.B -l, --lines
+.B -l
 The number of lines in the input file is written to the standard output.
 .TP
-.B -w, --words
+.B -m
+The number of characters in the input file is written to the standard output. If the current locale does not support multibyte characters, this is equivalent to the -c option. This will cancel out any prior usage of the -c option.
+.TP
+.B -w
 The number of words in the input file is written to the standard output.
 .SH ARGUMENTS
 .TP
@@ -29,12 +32,9 @@ Count the number of lines in a file:
 .PP
 .B wk -l myfile.txt
 .SH SEE ALSO
-.BR wcq (1)
+.BR wc (1)
 .SH AUTHOR
 Vladas Maier <vladas.mr@gmail.com>.
-.SH BUGS
-Report bugs to vladas.mr@gmail.com.
 .SH COPYRIGHT
-Copyright © 2024 Vladas Maier. This is free software: you are free to change and redistribute it.
-There is NO WARRANTY, to the extent permitted by law.
+Copyright © 2024 Vladas Maier. This is free software: you are free to change and redistribute it. There is NO WARRANTY, to the extent permitted by law.
 .\" End of man page

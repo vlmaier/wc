@@ -5,8 +5,12 @@ JAR_PATH=~/Library/Java/Extensions/wk.jar
 MAN_PATH=~/.local/share/man
 BIN_PATH=~/bin
 
-# Build the project
-./gradlew build
+# Build the project and check the exit code
+if ! ./gradlew build; then
+  echo "Error: Gradle build failed."
+  echo "Installation aborted."
+  exit 1
+fi
 
 # Move the JAR file to the target directory
 mkdir -p ~/Library/Java/Extensions
@@ -49,5 +53,5 @@ fi
 # shellcheck source=/dev/null
 source "$PROFILE_PATH"
 
-echo "wk successfully installed."
+echo "Installation successful."
 echo "$> man wk"
