@@ -1,6 +1,12 @@
-# wc clone
+# wk - the wc clone
 
 Coding Challenge #1 - Build your own wc!
+
+The functional requirements for `wc` are concisely described by it’s man page - give it a go in your local terminal now:
+
+```shell
+man wc
+```
 
 The TL/DR version is: wc – word, line, character, and byte count.
 
@@ -9,17 +15,17 @@ The TL/DR version is: wc – word, line, character, and byte count.
 ### Clone
 
 ```shell
-git clone git@github.com:vlmaier/wc.git
+git clone git@github.com:vlmaier/wk.git
 ```
 
-### Build
+### Install
 
 ```shell
-./gradlew build
+./install
 ```
 
-### Execute
+### Run
 
 ```shell
-java -jar build/libs/wc-0.0.1.jar -c src/main/resources/test.txt
+wk -h
 ```

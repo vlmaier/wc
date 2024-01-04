@@ -6,7 +6,7 @@ import com.github.ajalt.clikt.parameters.options.option
 import java.nio.file.Files
 import java.nio.file.Path
 
-class WordCount : CliktCommand(name = "wc") {
+class WordCount : CliktCommand(name = "wk") {
     private val countBytes by option("-c").flag()
         .help { "The number of bytes in the input file is written to the standard output." }
     private val countLines by option("-l").flag()

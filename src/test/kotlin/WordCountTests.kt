@@ -5,19 +5,19 @@ import org.junit.jupiter.api.Assertions.*
 
 class WordCountTests {
 
-    private val fileName = "src/main/resources/test.txt"
-    private val wc = WordCount()
+    private val testFile = "src/test/resources/test.txt"
+    private val wk = WordCount()
 
     @Test
     fun `test command name`() {
-        assertEquals(wc.commandName, "wc")
+        assertEquals(wk.commandName, "wk")
     }
 
     @Test
     fun `test help output`() {
-        val result = wc.test("-h")
+        val result = wk.test("-h")
         assertEquals("""
-Usage: wc [<options>] <filename>
+Usage: wk [<options>] <filename>
 
 Options:
   -c          The number of bytes in the input file is written to the standard
@@ -34,9 +34,9 @@ Options:
 
     @Test
     fun `test missing file name`() {
-        val result = wc.test("-c")
+        val result = wk.test("-c")
         assertEquals("""
-Usage: wc [<options>] <filename>
+Usage: wk [<options>] <filename>
 
 Error: missing argument <filename>
 """.trimStart(), result.stderr)
@@ -46,24 +46,24 @@ Error: missing argument <filename>
 
     @Test
     fun `test bytes counter`() {
-        val result = wc.test("-c $fileName")
-        assertEquals("342190 $fileName\n", result.stdout)
+        val result = wk.test("-c $testFile")
+        assertEquals("342190 $testFile\n", result.stdout)
         assertEquals("", result.stderr)
         assertEquals(0, result.statusCode)
     }
 
     @Test
     fun `test lines counter`() {
-        val result = wc.test("-l $fileName")
-        assertEquals("7145 $fileName\n", result.stdout)
+        val result = wk.test("-l $testFile")
+        assertEquals("7145 $testFile\n", result.stdout)
         assertEquals("", result.stderr)
         assertEquals(0, result.statusCode)
     }
 
     @Test
     fun `test words counter`() {
-        val result = wc.test("-w $fileName")
-        assertEquals("58164 $fileName\n", result.stdout)
+        val result = wk.test("-w $testFile")
+        assertEquals("58164 $testFile\n", result.stdout)
         assertEquals("", result.stderr)
         assertEquals(0, result.statusCode)
     }
