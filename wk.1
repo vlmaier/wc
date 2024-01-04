@@ -2,11 +2,11 @@
 .\" Adapted from the example at https://www.systutorials.com/docs/linux/man/7-man-pages/
 .TH WK 1 "January 2024" "1.0.0" "wk man page"
 .SH NAME
-wk \- Count bytes, lines, or words in a file (wc clone written in Kotlin)
+wk \- Count bytes, lines, or words in a file or from standard input (wc clone written in Kotlin)
 .SH SYNOPSIS
 .B wk
 .RI [ options ]
-.I filename
+.I [ filename ]
 .SH DESCRIPTION
 .B wk
 counts the number of bytes, lines, or words in a file and writes the result to the standard output.
@@ -26,15 +26,23 @@ Count the number of words in the input file.
 .SH ARGUMENTS
 .TP
 .I filename
-The path to the input file.
+The path to the input file. If not specified, read from standard input.
 .SH EXAMPLES
 Count the number of lines in a file:
 .PP
 .B wk -l myfile.txt
+.PP
+Count the number of bytes from standard input:
+.PP
+.B echo Hello, World! | wk -c
 .SH SEE ALSO
 .BR wc (1)
 .SH AUTHOR
 Vladas Maier <vladas.mr@gmail.com>.
 .SH COPYRIGHT
-Copyright © 2024 Vladas Maier. This is free software; you are free to change and redistribute it. There is NO WARRANTY, to the extent permitted by law.
+Copyright © 2024 Vladas Maier.
+.PP
+This is free software; you are free to change and redistribute it.
+.PP
+There is NO WARRANTY, to the extent permitted by law.
 .\" End of man page

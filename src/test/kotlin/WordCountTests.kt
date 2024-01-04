@@ -17,19 +17,19 @@ class WordCountTests {
     fun `test help output`() {
         val result = wk.test("-h")
         assertEquals("""
-Usage: wk [<options>] <filename>
+Usage: wk [<options>] [<filename>]
 
 Options:
-  -c          The number of bytes in the input file is written to the standard
-              output.
-  -l          The number of lines in the input file is written to the standard
-              output.
-  -m          The number of characters in the input file is written to the
-              standard output. If the current locale does not support multibyte
+  -c          The number of bytes in the input file or stdin is written to the
+              stdout.
+  -l          The number of lines in the input file or stdin is written to the
+              stdout.
+  -m          The number of characters in the input file or stdin is written to
+              the stdout. If the current locale does not support multibyte
               characters, this is equivalent to the -c option. This will cancel
               out any prior usage of the -c option.
-  -w          The number of words in the input file is written to the standard
-              output.
+  -w          The number of words in the input file or stdin is written to the
+              stdout.
   -h, --help  Show this message and exit
 """.trimStart(), result.stdout)
         assertEquals("", result.stderr)
@@ -39,13 +39,9 @@ Options:
     @Test
     fun `test missing file name`() {
         val result = wk.test("-c")
-        assertEquals("""
-Usage: wk [<options>] <filename>
-
-Error: missing argument <filename>
-""".trimStart(), result.stderr)
-        assertEquals("", result.stdout)
-        assertEquals(1, result.statusCode)
+        assertEquals("  0\n", result.stdout)
+        assertEquals("", result.stderr)
+        assertEquals(0, result.statusCode)
     }
 
     @Test
