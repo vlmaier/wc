@@ -45,11 +45,11 @@ class WordCount : CliktCommand(name = "wk") {
         "${countLines(content)}  ${countWords(content)}  ${countCharacters(content)}"
 
     private fun countBytes(content: String) = content.toByteArray(Charsets.UTF_8).size
-    private fun countLines(content: String) = content.split("\n").size - 1
+    private fun countLines(content: String) = content.lines().size
     private fun countWords(content: String) = content.trim().split("\\s+".toRegex()).size
 
     private fun countCharacters(content: String): Int {
-        return if (Charset.defaultCharset().displayName().contains(Charsets.UTF_8.name(), ignoreCase = true)) {
+        return if (Charset.defaultCharset() == Charsets.UTF_8) {
             content.length
         } else {
             countBytes(content)

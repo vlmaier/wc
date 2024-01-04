@@ -55,7 +55,7 @@ Options:
     @Test
     fun `test lines counter`() {
         val result = wk.test("-l $testFile")
-        assertEquals("  7145 $testFile\n", result.stdout)
+        assertEquals("  7146 $testFile\n", result.stdout)
         assertEquals("", result.stderr)
         assertEquals(0, result.statusCode)
     }
@@ -79,7 +79,7 @@ Options:
     @Test
     fun `test default counter`() {
         val result = wk.test(testFile)
-        assertEquals("  7145  58164  339292 $testFile\n", result.stdout)
+        assertEquals("  7146  58164  339292 $testFile\n", result.stdout)
         assertEquals("", result.stderr)
         assertEquals(0, result.statusCode)
     }
