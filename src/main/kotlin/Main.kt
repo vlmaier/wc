@@ -9,11 +9,17 @@ import java.nio.file.Path
 class WordCount : CliktCommand(name = "wc") {
     private val countBytes by option("-c").flag()
         .help { "The number of bytes in the input file is written to the standard output." }
+    private val countLines by option("-l").flag()
+        .help { "The number of lines in the input file is written to the standard output." }
     private val fileName by argument()
 
     override fun run() {
         if (countBytes) {
             val count = Files.readAllBytes(Path.of(fileName)).count()
+            echo("$count $fileName")
+        }
+        if (countLines) {
+            val count = Files.readAllLines(Path.of(fileName)).count()
             echo("$count $fileName")
         }
     }

@@ -22,20 +22,23 @@ Usage: wc [<options>] <filename>
 Options:
   -c          The number of bytes in the input file is written to the standard
               output.
+  -l          The number of lines in the input file is written to the standard
+              output.
   -h, --help  Show this message and exit
 """.trimStart(), result.stdout)
+        assertEquals("", result.stderr)
         assertEquals(0, result.statusCode)
     }
 
     @Test
     fun `test missing file name`() {
         val result = wc.test("-c")
-        assertEquals("", result.stdout)
         assertEquals("""
 Usage: wc [<options>] <filename>
 
 Error: missing argument <filename>
 """.trimStart(), result.stderr)
+        assertEquals("", result.stdout)
         assertEquals(1, result.statusCode)
     }
 
@@ -43,6 +46,15 @@ Error: missing argument <filename>
     fun `test bytes counter`() {
         val result = wc.test("-c $fileName")
         assertEquals("342190 $fileName\n", result.stdout)
+        assertEquals("", result.stderr)
+        assertEquals(0, result.statusCode)
+    }
+
+    @Test
+    fun `test lines counter`() {
+        val result = wc.test("-l $fileName")
+        assertEquals("7145 $fileName\n", result.stdout)
+        assertEquals("", result.stderr)
         assertEquals(0, result.statusCode)
     }
 }
