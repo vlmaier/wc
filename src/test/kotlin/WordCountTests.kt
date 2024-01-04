@@ -47,7 +47,6 @@ Options:
     @Test
     fun `test bytes counter`() {
         val result = wk.test("-c $testFile")
-        println(result.stdout)
         assertEquals("  342190 $testFile\n", result.stdout)
         assertEquals("", result.stderr)
         assertEquals(0, result.statusCode)
@@ -64,7 +63,6 @@ Options:
     @Test
     fun `test characters counter`() {
         val result = wk.test("-m $testFile")
-        println(result.stdout)
         assertEquals("  339292 $testFile\n", result.stdout)
         assertEquals("", result.stderr)
         assertEquals(0, result.statusCode)
@@ -81,7 +79,6 @@ Options:
     @Test
     fun `test default counter`() {
         val result = wk.test(testFile)
-        println(result.stdout)
         assertEquals("  7146  58164  339292 $testFile\n", result.stdout)
         assertEquals("", result.stderr)
         assertEquals(0, result.statusCode)
