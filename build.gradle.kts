@@ -17,6 +17,7 @@ dependencies {
 
 tasks.test {
     useJUnitPlatform()
+    systemProperty("file.encoding", "UTF-8")
 }
 
 tasks.withType<Jar> {
