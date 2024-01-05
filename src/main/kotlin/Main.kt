@@ -45,7 +45,7 @@ class WordCount : CliktCommand(name = "wk") {
         "${countLines(content)}  ${countWords(content)}  ${countCharacters(content)}"
 
     private fun countBytes(content: String) = content.toByteArray(Charsets.UTF_8).size
-    private fun countLines(content: String) = content.lineSequence().count()
+    private fun countLines(content: String) = content.lineSequence().count() - 1
     private fun countWords(content: String) = content.trim().split("\\s+".toRegex()).size
 
     private fun countCharacters(content: String): Int {

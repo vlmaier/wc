@@ -58,7 +58,7 @@ Options:
     @Test
     fun `test lines counter`() {
         val result = wk.test("-l $testFile")
-        assertEquals("  7146 $testFile\n", result.stdout)
+        assertEquals("  7145 $testFile\n", result.stdout)
         assertEquals("", result.stderr)
         assertEquals(0, result.statusCode)
     }
@@ -86,7 +86,7 @@ Options:
         val result = wk.test(testFile)
         val parts = result.stdout.trim().split(Regex("\\s+"))
         assertContains(result.stdout, "$testFile\n")
-        assertEquals("7146", parts[0])
+        assertEquals("7145", parts[0])
         assertEquals("58164", parts[1])
         assertTrue(Regex("[0-9]").containsMatchIn(parts[2]))
         assertEquals("", result.stderr)
