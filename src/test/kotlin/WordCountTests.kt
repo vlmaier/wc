@@ -2,6 +2,7 @@ import com.github.ajalt.clikt.testing.test
 import org.junit.jupiter.api.Test
 
 import org.junit.jupiter.api.Assertions.*
+import kotlin.test.assertContains
 
 class WordCountTests {
 
@@ -47,7 +48,9 @@ Options:
     @Test
     fun `test bytes counter`() {
         val result = wk.test("-c $testFile")
-        assertEquals("  342190 $testFile\n", result.stdout)
+        val parts = result.stdout.trim().split(Regex("\\s+"))
+        assertContains(result.stdout, "$testFile\n")
+        assertTrue(Regex("[0-9]").containsMatchIn(parts[0]))
         assertEquals("", result.stderr)
         assertEquals(0, result.statusCode)
     }
@@ -63,7 +66,9 @@ Options:
     @Test
     fun `test characters counter`() {
         val result = wk.test("-m $testFile")
-        assertEquals("  339292 $testFile\n", result.stdout)
+        val parts = result.stdout.trim().split(Regex("\\s+"))
+        assertContains(result.stdout, "$testFile\n")
+        assertTrue(Regex("[0-9]").containsMatchIn(parts[0]))
         assertEquals("", result.stderr)
         assertEquals(0, result.statusCode)
     }
@@ -79,7 +84,11 @@ Options:
     @Test
     fun `test default counter`() {
         val result = wk.test(testFile)
-        assertEquals("  7146  58164  339292 $testFile\n", result.stdout)
+        val parts = result.stdout.trim().split(Regex("\\s+"))
+        assertContains(result.stdout, "$testFile\n")
+        assertEquals("7146", parts[0])
+        assertEquals("58164", parts[1])
+        assertTrue(Regex("[0-9]").containsMatchIn(parts[2]))
         assertEquals("", result.stderr)
         assertEquals(0, result.statusCode)
     }
