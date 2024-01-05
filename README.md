@@ -31,3 +31,16 @@ git clone git@github.com:vlmaier/wk.git
 ```shell
 wk -h
 ```
+
+```console
+Usage: wk [<options>] [<filename>]
+
+Options:
+  -c          The number of bytes in the input file or stdin is written to the stdout.
+  -l          The number of lines in the input file or stdin is written to the stdout.
+  -m          The number of characters in the input file or stdin is written to the stdout. If the current locale does not
+              support multibyte characters, this is equivalent to the -c option. This will cancel out any prior usage of
+              the -c option.
+  -w          The number of words in the input file or stdin is written to the stdout.
+  -h, --help  Show this message and exit
+```
