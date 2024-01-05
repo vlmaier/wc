@@ -40,7 +40,22 @@ Options:
     @Test
     fun `test missing file name`() {
         val result = wk.test("-c")
-        assertEquals("  0\n", result.stdout)
+        assertEquals("""
+Usage: wk [<options>] [<filename>]
+
+Options:
+  -c          The number of bytes in the input file or stdin is written to the
+              stdout.
+  -l          The number of lines in the input file or stdin is written to the
+              stdout.
+  -m          The number of characters in the input file or stdin is written to
+              the stdout. If the current locale does not support multibyte
+              characters, this is equivalent to the -c option. This will cancel
+              out any prior usage of the -c option.
+  -w          The number of words in the input file or stdin is written to the
+              stdout.
+  -h, --help  Show this message and exit
+""".trimStart(), result.stdout)
         assertEquals("", result.stderr)
         assertEquals(0, result.statusCode)
     }
@@ -58,7 +73,7 @@ Options:
     @Test
     fun `test lines counter`() {
         val result = wk.test("-l $testFile")
-        assertEquals("  7145 $testFile\n", result.stdout)
+        assertEquals("7145 $testFile", result.stdout.trim())
         assertEquals("", result.stderr)
         assertEquals(0, result.statusCode)
     }
@@ -76,7 +91,7 @@ Options:
     @Test
     fun `test words counter`() {
         val result = wk.test("-w $testFile")
-        assertEquals("  58164 $testFile\n", result.stdout)
+        assertEquals("58164 $testFile", result.stdout.trim())
         assertEquals("", result.stderr)
         assertEquals(0, result.statusCode)
     }

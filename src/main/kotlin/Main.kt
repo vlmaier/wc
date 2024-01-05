@@ -15,9 +15,11 @@ class WordCount : CliktCommand(name = "wk") {
     private val countLines by option("-l").flag()
         .help { "The number of lines in the input file or stdin is written to the stdout." }
     private val countCharacters by option("-m").flag()
-        .help { "The number of characters in the input file or stdin is written to the stdout. " +
-                "If the current locale does not support multibyte characters, this is equivalent to the -c option. " +
-                "This will cancel out any prior usage of the -c option." }
+        .help {
+            "The number of characters in the input file or stdin is written to the stdout. " +
+                    "If the current locale does not support multibyte characters, this is equivalent to the -c option. " +
+                    "This will cancel out any prior usage of the -c option."
+        }
     private val countWords by option("-w").flag()
         .help { "The number of words in the input file or stdin is written to the stdout." }
     private val fileName by argument().optional()
@@ -28,23 +30,29 @@ class WordCount : CliktCommand(name = "wk") {
         } else {
             Files.newBufferedReader(Path.of(fileName!!))
         }
-        bufferedReader.use {
-            val content = it.readText()
-            val counter = when {
-                countBytes -> countBytes(content)
-                countLines -> countLines(content)
-                countWords -> countWords(content)
-                countCharacters -> countCharacters(content)
-                else -> defaultCount(content)
+        bufferedReader.use { it ->
+            if (it.ready()) {
+                val content = it.readText()
+                val counterValues = listOfNotNull(
+                    if (countBytes) countBytes(content) else null,
+                    if (countLines) countLines(content) else null,
+                    if (countWords) countWords(content) else null,
+                    if (countCharacters) countCharacters(content) else null
+                )
+                val defaultCounter = if (counterValues.isEmpty()) defaultCount(content) else emptyList()
+                val formattedCounters = (counterValues + defaultCounter)
+                    .joinToString(" ") { it.let { "%8s".format(it) } }
+                echo("$formattedCounters ${fileName ?: ""}".trimEnd())
+            } else {
+                echoFormattedHelp()
             }
-            echo("  $counter ${fileName ?: ""}".trimEnd())
         }
     }
 
     private fun defaultCount(content: String) =
-        "${countLines(content)}  ${countWords(content)}  ${countCharacters(content)}"
+        listOf(countLines(content), countWords(content), countCharacters(content))
 
-    private fun countBytes(content: String) = content.toByteArray(Charsets.UTF_8).size
+    private fun countBytes(content: String) = content.toByteArray().size
     private fun countLines(content: String) = content.lineSequence().count() - 1
     private fun countWords(content: String) = content.trim().split("\\s+".toRegex()).size
 
